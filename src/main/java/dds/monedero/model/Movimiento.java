@@ -49,7 +49,9 @@ public class Movimiento {
     cuenta.agregarMovimiento(fecha, monto, esDeposito);
   }
 
+  //Duplicated code
   public double calcularValor(Cuenta cuenta) {
+    // type test code smell
     if (esDeposito) {
       return cuenta.getSaldo() + getMonto();
     } else {

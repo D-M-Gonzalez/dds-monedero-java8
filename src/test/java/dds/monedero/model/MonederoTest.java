@@ -8,7 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MonederoTest {
   private Cuenta cuenta;
@@ -22,6 +24,7 @@ public class MonederoTest {
   @DisplayName("Es posible poner $1500 en una cuenta vacía")
   void Poner() {
     cuenta.poner(1500);
+    assertEquals(1500.0,cuenta.getSaldo());
   }
 
   @Test
@@ -36,6 +39,8 @@ public class MonederoTest {
     cuenta.poner(1500);
     cuenta.poner(456);
     cuenta.poner(1900);
+
+    assertEquals(3856.0,cuenta.getSaldo());
   }
 
   @Test

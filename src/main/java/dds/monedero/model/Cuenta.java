@@ -23,6 +23,7 @@ public class Cuenta {
   }
 
   public void poner(double cuanto) {
+    //Duplicated code
     if (cuanto <= 0) {
       throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
     }
@@ -32,11 +33,12 @@ public class Cuenta {
         .count() >= 3) {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
-
+    //Duplicated code
     new Movimiento(LocalDate.now(), cuanto, true).agregateA(this);
   }
 
   public void sacar(double cuanto) {
+    //Duplicated code
     if (cuanto <= 0) {
       throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
     }
@@ -49,6 +51,8 @@ public class Cuenta {
       throw new MaximoExtraccionDiarioException(
           "No puede extraer mas de $ " + 1000 + " diarios, " + "límite: " + limite);
     }
+
+    //Duplicated code
     new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
   }
 
