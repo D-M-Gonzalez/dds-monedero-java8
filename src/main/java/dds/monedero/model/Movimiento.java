@@ -1,5 +1,7 @@
 package dds.monedero.model;
 
+import dds.monedero.exceptions.MontoNegativoException;
+
 import java.time.LocalDate;
 
 public class Movimiento {
