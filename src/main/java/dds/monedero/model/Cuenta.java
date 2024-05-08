@@ -28,8 +28,10 @@ public class Cuenta {
         .count() >= 3) {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
-    //Duplicated code
-    new Movimiento(LocalDate.now(), new Deposito(cuanto)).agregateA(this);
+
+    //No era un codesmell pero se creaba una instancia de un movimiento que se perdia en la nada
+    //De esta manera solo se crea la instancia una sola vez
+    agregarMovimiento(LocalDate.now(), new Deposito(cuanto));
   }
 
   public void sacar(double cuanto) {
@@ -43,12 +45,14 @@ public class Cuenta {
           "No puede extraer mas de $ " + 1000 + " diarios, " + "límite: " + limite);
     }
 
-    //Duplicated code
-    new Movimiento(LocalDate.now(), new Extraccion(cuanto)).agregateA(this);
+    agregarMovimiento(LocalDate.now(), new Extraccion(cuanto));
   }
 
   public void agregarMovimiento(LocalDate fecha, MontoMovimiento monto) {
     var movimiento = new Movimiento(fecha, monto);
+    //Esto se genero a partir del último cambio, tenemos una referencia
+    //Que podría simplificarse
+    this.setSaldo(movimiento.calcularValor(this));
     movimientos.add(movimiento);
   }
 
