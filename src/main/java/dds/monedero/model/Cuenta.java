@@ -50,9 +50,8 @@ public class Cuenta {
 
   public void agregarMovimiento(LocalDate fecha, MontoMovimiento monto) {
     var movimiento = new Movimiento(fecha, monto);
-    //Esto se genero a partir del último cambio, tenemos una referencia
-    //Que podría simplificarse
-    this.setSaldo(movimiento.calcularValor(this));
+    //Pasar una clase entera para utilizar una sola propiedad es un desperdicio
+    this.setSaldo(movimiento.calcularValor(this.getSaldo()));
     movimientos.add(movimiento);
   }
 

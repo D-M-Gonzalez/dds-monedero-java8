@@ -45,7 +45,7 @@ public class Movimiento {
     return !monto.esDeposito();
   }
 
-  public double calcularValor(Cuenta cuenta) {
-    return monto.getSaldo(cuenta);
+  public double calcularValor(double saldo) {
+    return saldo + monto.getSaldo();
   }
 }

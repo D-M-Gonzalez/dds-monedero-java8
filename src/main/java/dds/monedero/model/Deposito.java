@@ -25,7 +25,7 @@ public class Deposito implements MontoMovimiento {
     return monto;
   }
 
-  public double getSaldo(Cuenta cuenta){
-    return cuenta.getSaldo() + getMonto();
+  public double getSaldo(){
+    return getMonto();
   }
 }
