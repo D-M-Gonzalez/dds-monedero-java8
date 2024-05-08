@@ -68,6 +68,7 @@ public class Cuenta {
         .sum();
   }
 
+  //Non protected access
   public List<Movimiento> getMovimientos() {
     return movimientos;
   }

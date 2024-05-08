@@ -8,7 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -76,6 +80,72 @@ public class MonederoTest {
   @DisplayName("No es posible extraer un monto negativo")
   void ExtraerMontoNegativo() {
     assertThrows(MontoNegativoException.class, () -> cuenta.sacar(-500));
+  }
+
+  @Test
+  @DisplayName("El movimiento es un depósito")
+  void EsUnDeposito() {
+    cuenta.poner(1500);
+    List<Movimiento> movimientoList = cuenta.getMovimientos();
+
+    assertTrue(movimientoList.get(0).isDeposito());
+  }
+
+  @Test
+  @DisplayName("El movimiento no es un depósito")
+  void NoEsUnDeposito() {
+    cuenta.setSaldo(5000);
+    cuenta.sacar(500);
+    List<Movimiento> movimientoList = cuenta.getMovimientos();
+
+    assertFalse(movimientoList.get(0).isDeposito());
+  }
+
+  @Test
+  @DisplayName("El movimiento no es una extracción")
+  void NoEsUnaExtraccion() {
+    cuenta.poner(1500);
+    List<Movimiento> movimientoList = cuenta.getMovimientos();
+
+    assertFalse(movimientoList.get(0).isExtraccion());
+  }
+
+  @Test
+  @DisplayName("El movimiento es una extracción")
+  void EsUnaExtraccion() {
+    cuenta.setSaldo(5000);
+    cuenta.sacar(500);
+    List<Movimiento> movimientoList = cuenta.getMovimientos();
+
+    assertTrue(movimientoList.get(0).isExtraccion());
+  }
+
+  @Test
+  @DisplayName("El movimiento fue de la fecha de hoy")
+  void FueDeHoy() {
+    cuenta.poner(1500);
+    List<Movimiento> movimientoList = cuenta.getMovimientos();
+
+    assertTrue(movimientoList.get(0).esDeLaFecha(LocalDate.now()));
+  }
+
+  @Test
+  @DisplayName("El movimiento fue depositado hoy")
+  void FueDepositadoHoy() {
+    cuenta.poner(1500);
+    List<Movimiento> movimientoList = cuenta.getMovimientos();
+
+    assertTrue(movimientoList.get(0).fueDepositado(LocalDate.now()));
+  }
+
+  @Test
+  @DisplayName("El movimiento fue extraido hoy")
+  void FueExtraidoHoy() {
+    cuenta.setSaldo(5000);
+    cuenta.sacar(500);
+    List<Movimiento> movimientoList = cuenta.getMovimientos();
+
+    assertTrue(movimientoList.get(0).fueExtraido(LocalDate.now()));
   }
 
 }
