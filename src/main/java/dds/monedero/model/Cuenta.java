@@ -34,7 +34,7 @@ public class Cuenta {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
     //Duplicated code
-    new Movimiento(LocalDate.now(), cuanto, true).agregateA(this);
+    new Movimiento(LocalDate.now(), new Deposito(cuanto)).agregateA(this);
   }
 
   public void sacar(double cuanto) {
@@ -53,11 +53,11 @@ public class Cuenta {
     }
 
     //Duplicated code
-    new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
+    new Movimiento(LocalDate.now(), new Extraccion(cuanto)).agregateA(this);
   }
 
-  public void agregarMovimiento(LocalDate fecha, double cuanto, boolean esDeposito) {
-    var movimiento = new Movimiento(fecha, cuanto, esDeposito);
+  public void agregarMovimiento(LocalDate fecha, MontoMovimiento monto) {
+    var movimiento = new Movimiento(fecha, monto);
     movimientos.add(movimiento);
   }
 
